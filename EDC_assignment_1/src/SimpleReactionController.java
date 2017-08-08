@@ -1,7 +1,7 @@
 
 public class SimpleReactionController implements Controller
 {   //MVC members
-    private ReactionMachine model;
+
     private Gui view;
     private Random random;
     //other members
@@ -79,11 +79,11 @@ public class SimpleReactionController implements Controller
 
         if (timer_on==true) {
            //if timer hits 2 seconds without response
-            if(time>=2){
+            if(time>=1.99){
                 timer_on = false;
                 credits = credits-1;
                 score_display_timer=score_display_timer+10;
-                view.setDisplay("2");
+                view.setDisplay("2.00");
                 if (score_display_timer>=3000) {
                     this.init();
                     view.init();
@@ -92,9 +92,9 @@ public class SimpleReactionController implements Controller
             //when the delay_timer has reached the random delay period
             //start reaction_timer
             delay_timer=delay_timer+10;
-            if(delay_timer>delay) {
+            if(delay_timer>=delay) {
                 time = time + 0.01;
-                string_time = String.format("%.1f", time);
+                string_time = String.format("%.2f", time);
                 //display the ticks
                 view.setDisplay(string_time);
             }
