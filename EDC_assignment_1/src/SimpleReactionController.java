@@ -1,7 +1,6 @@
 
 public class SimpleReactionController implements Controller
 {   //MVC members
-
     private Gui view;
     private Random random;
     //other members
@@ -13,15 +12,11 @@ public class SimpleReactionController implements Controller
     private String string_time;
     private boolean timer_on=false;
     private boolean game_in_progress = false;
-
-
     //Connect controller to gui
-    //(This method will be called before ANY other methods)
-	
+    //(This method will be called before ANY other methods)	
 	public SimpleReactionController(){
-
-	}
-	
+		//
+	}	
     public void connect(Gui gui, Random rng){
         this.random = rng;
 	    this.view = gui;
@@ -34,19 +29,17 @@ public class SimpleReactionController implements Controller
         score_display_timer=0;
         timer_on=false;
         game_in_progress = false;
-
     }
     //Called whenever a coin is inserted into the machine
     public void coinInserted(){
         credits = credits +1;
         view.setDisplay("Press GO!");
 	}
-
     //Called whenever the go/stop button is pressed
     public void goStopPressed(){
         //if credits available:
         if (credits>0){
-            //if timer has not started, start timer
+            //if timer has not started, set delay, initialise delay timer, start game timer, game is in progress
             if (timer_on==false) {
                 view.setDisplay("Wait...");
                 delay=random.getRandom(1000,2500);
@@ -54,17 +47,16 @@ public class SimpleReactionController implements Controller
                 time=0;
                 timer_on=true;
                 game_in_progress=true;
-
             }
             //if timer is running, stop timer, remove a credit
             //keep time on display, reset time
             else if (timer_on==true){
-                //if button is pressed before timer starts
+                //if button is pressed before timer starts: reset view, reset game, remove a credit
                 if(delay_timer<delay){
                     credits=credits-1;
                     view.init();
                     this.init();
-                }//did not cheat: stop timer, display final time reset after 3 seconds
+                }//did not cheat: stop timer, display final time reset after 3 seconds, remove a credit
                 else {
                     timer_on = false;
                     credits = credits - 1;
@@ -73,10 +65,8 @@ public class SimpleReactionController implements Controller
             }
         }
 	}
-
     //Called to deliver a TICK to the controller
     public void tick(){
-
         if (timer_on==true) {
            //if timer hits 2 seconds without response
             if(time>=1.99){
@@ -86,7 +76,8 @@ public class SimpleReactionController implements Controller
                 view.setDisplay("2.00");
                 if (score_display_timer>=3000) {
                     this.init();
-                    view.init();
+                    view.setDisplay("Insert Coin");
+                    view.setDisplay("0.00");
                 }
             }
             //when the delay_timer has reached the random delay period
@@ -105,7 +96,8 @@ public class SimpleReactionController implements Controller
             //view.setDisplay(string_time);
             if (score_display_timer>=3000) {
                 this.init();
-                view.init();
+                view.setDisplay("Insert Coin");
+                view.setDisplay("0.00");
             }
         }
 	}

@@ -74,10 +74,14 @@ public class Display extends JFrame implements Gui
 
     //Change the displayed text
     public void setDisplay(String s){
+
     	if (s=="Press GO!") {
 			text_string.setText(s);
 		}
 		else if (s=="Wait...") {
+			text_string.setText(s);
+		}
+		else if (s=="Insert Coin") {
 			text_string.setText(s);
 		}
 		else
